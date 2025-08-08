@@ -1,7 +1,7 @@
 import React from "react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogDescription } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
@@ -31,8 +31,17 @@ function loadSisters(): Sister[] {
   }
 }
 
+let STORAGE_ERROR_SHOWN = false;
 function saveSisters(items: Sister[]) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+  } catch (err) {
+    console.error("Failed to save sisters:", err);
+    if (!STORAGE_ERROR_SHOWN) {
+      STORAGE_ERROR_SHOWN = true;
+      toast.error("Storage full: try smaller photos or remove some entries.");
+    }
+  }
 }
 
 const categoryLabels: Record<SisterCategory, string> = {
@@ -41,17 +50,49 @@ const categoryLabels: Record<SisterCategory, string> = {
   vow: "Mouth-spoken Sister",
 };
 
+// Optimize images before storing to keep localStorage small
+async function compressImage(file: File, maxDimension = 1280, quality = 0.7): Promise<string> {
+  const url = URL.createObjectURL(file);
+  try {
+    const img = await new Promise<HTMLImageElement>((resolve, reject) => {
+      const i = new Image();
+      i.onload = () => resolve(i);
+      i.onerror = (e) => reject(e);
+      i.src = url;
+    });
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d");
+    if (!ctx) throw new Error("Canvas not supported");
+    let w = img.width;
+    let h = img.height;
+    const scale = Math.min(1, maxDimension / Math.max(w, h));
+    w = Math.round(w * scale);
+    h = Math.round(h * scale);
+    canvas.width = w;
+    canvas.height = h;
+    ctx.drawImage(img, 0, 0, w, h);
+    return canvas.toDataURL("image/jpeg", quality);
+  } finally {
+    URL.revokeObjectURL(url);
+  }
+}
+
 const AddSisterDialog: React.FC<{ onAdd: (s: Sister) => void }>= ({ onAdd }) => {
   const [open, setOpen] = React.useState(false);
   const [name, setName] = React.useState("");
   const [category, setCategory] = React.useState<SisterCategory>("real");
   const [photo, setPhoto] = React.useState<string | undefined>(undefined);
 
-  const onFile = (file?: File | null) => {
+  const onFile = async (file?: File | null) => {
     if (!file) return;
-    const reader = new FileReader();
-    reader.onload = () => setPhoto(String(reader.result));
-    reader.readAsDataURL(file);
+    try {
+      const dataUrl = await compressImage(file, 1280, 0.72);
+      setPhoto(dataUrl);
+      toast.success("Photo optimized for storage");
+    } catch (e) {
+      console.error(e);
+      toast.error("Could not process the image");
+    }
   };
 
   const submit = () => {
@@ -82,6 +123,9 @@ const AddSisterDialog: React.FC<{ onAdd: (s: Sister) => void }>= ({ onAdd }) => 
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle>Add a Sister</DialogTitle>
+          <DialogDescription id="add-sister-desc">
+            Add name, category and an optional photo. Photos are optimized to save space.
+          </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4">
           <div className="grid gap-2">
