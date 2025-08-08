@@ -53,6 +53,20 @@ All colors MUST be HSL.
     --sidebar-border: 220 13% 91%;
 
     --sidebar-ring: 217.2 91.2% 59.8%;
+
+    /* Raksha Bandhan theme tokens */
+    --brand-saffron: 33 92% 54%;
+    --brand-rose: 338 77% 55%;
+    --brand-marigold: 41 97% 56%;
+    --brand-deep: 18 38% 18%;
+
+    --gradient-hero: linear-gradient(135deg, hsl(var(--brand-saffron)) 0%, hsl(var(--brand-rose)) 50%, hsl(var(--brand-marigold)) 100%);
+    --gradient-accent: linear-gradient(135deg, hsl(var(--brand-rose)) 0%, hsl(var(--brand-marigold)) 100%);
+
+    --shadow-elegant: 0 12px 30px -12px hsl(var(--brand-rose) / 0.35);
+    --shadow-glow: 0 0 40px hsl(var(--brand-marigold) / 0.35);
+
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .dark {
@@ -90,8 +104,22 @@ All colors MUST be HSL.
     --sidebar-accent: 240 3.7% 15.9%;
     --sidebar-accent-foreground: 240 4.8% 95.9%;
     --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
-  }
+     --sidebar-ring: 217.2 91.2% 59.8%;
+
+     /* Raksha Bandhan theme tokens (dark) */
+     --brand-saffron: 33 92% 56%;
+     --brand-rose: 338 77% 62%;
+     --brand-marigold: 41 97% 60%;
+     --brand-deep: 18 38% 12%;
+
+     --gradient-hero: linear-gradient(135deg, hsl(var(--brand-rose)) 0%, hsl(var(--brand-marigold)) 50%, hsl(var(--brand-saffron)) 100%);
+     --gradient-accent: linear-gradient(135deg, hsl(var(--brand-marigold)) 0%, hsl(var(--brand-rose)) 100%);
+
+     --shadow-elegant: 0 12px 30px -12px hsl(var(--brand-rose) / 0.4);
+     --shadow-glow: 0 0 40px hsl(var(--brand-saffron) / 0.45);
+
+     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+   }
 }
 
 @layer base {
@@ -102,4 +130,39 @@ All colors MUST be HSL.
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* Components & utilities */
+@layer components {
+  .bg-hero-gradient { background-image: var(--gradient-hero); }
+  .variant-hero {
+    background-image: var(--gradient-hero);
+    color: hsl(var(--primary-foreground));
+    border: 1px solid hsl(var(--accent) / 0.2);
+    box-shadow: var(--shadow-elegant);
+    transition: var(--transition-smooth);
+  }
+  .variant-hero:hover { filter: brightness(1.05); box-shadow: var(--shadow-glow); }
+  .card-elevated { background-color: hsl(var(--card)); border: 1px solid hsl(var(--border)); box-shadow: var(--shadow-elegant); }
+  .hero-glow { position: relative; }
+  .hero-glow::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    pointer-events: none;
+    background: radial-gradient(600px circle at var(--pointer-x, 50%) var(--pointer-y, 50%), hsl(var(--brand-rose) / 0.15), transparent 40%);
+    transition: var(--transition-smooth);
+  }
+  .badge-real { background-color: hsl(var(--brand-saffron) / 0.15); color: hsl(var(--brand-deep)); }
+  .badge-cousin { background-color: hsl(var(--brand-rose) / 0.15); color: hsl(var(--brand-deep)); }
+  .badge-vow { background-color: hsl(var(--brand-marigold) / 0.15); color: hsl(var(--brand-deep)); }
+}
+
+@keyframes float-soft {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+@layer utilities {
+  .animate-float-soft { animation: float-soft 6s ease-in-out infinite; }
 }
