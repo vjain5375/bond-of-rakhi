@@ -2,6 +2,7 @@ import React from "react";
 import RakhiHero from "@/components/RakhiHero";
 import SistersGrid from "@/components/SistersGrid";
 import AudioPlayerFloating from "@/components/AudioPlayerFloating";
+import { MusicProvider } from "@/contexts/MusicContext";
 
 const Index = () => {
   const heroRef = React.useRef<HTMLDivElement>(null);
@@ -44,31 +45,33 @@ const Index = () => {
   };
 
   return (
-    <div ref={heroRef}>
-      <header className="container mx-auto py-6">
-        <nav className="flex items-center justify-between">
-          <a href="#" className="text-lg font-semibold">
-            Bond of Rakhi
-          </a>
-          <a href="#gallery" className="text-sm underline-offset-4 hover:underline">Gallery</a>
-        </nav>
-      </header>
+    <MusicProvider>
+      <div ref={heroRef}>
+        <header className="container mx-auto py-6">
+          <nav className="flex items-center justify-between">
+            <a href="#" className="text-lg font-semibold">
+              Bond of Rakhi
+            </a>
+            <a href="#gallery" className="text-sm underline-offset-4 hover:underline">Gallery</a>
+          </nav>
+        </header>
 
-      <main id="main" className="container mx-auto px-4 md:px-6">
-        <RakhiHero onAddSister={scrollToAdd} onOpenMusic={openMusic} />
-        
+        <main id="main" className="container mx-auto px-4 md:px-6">
+          <RakhiHero onAddSister={scrollToAdd} onOpenMusic={openMusic} />
+          
 
-        
-        <div id="add-sister-anchor" />
-        <section id="gallery" aria-label="Sisters Gallery">
-          <SistersGrid />
-        </section>
-      </main>
+          
+          <div id="add-sister-anchor" />
+          <section id="gallery" aria-label="Sisters Gallery">
+            <SistersGrid />
+          </section>
+        </main>
 
-      <AudioPlayerFloating />
+        <AudioPlayerFloating />
 
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-    </div>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      </div>
+    </MusicProvider>
   );
 };
 

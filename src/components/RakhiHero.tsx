@@ -2,14 +2,12 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import heroImage from "@/assets/rakhi-hero.jpg";
 import { Music, Pause, Play } from "lucide-react";
-import { getAssetUrl } from "@/utils/assets";
+import { useMusicContext } from "@/contexts/MusicContext";
 
 const RakhiHero: React.FC<{ onAddSister: () => void; onOpenMusic: () => void }>
 = ({ onAddSister, onOpenMusic }) => {
   const sectionRef = React.useRef<HTMLDivElement>(null);
-  const audioRef = React.useRef<HTMLAudioElement | null>(null);
-  const [playing, setPlaying] = React.useState(false);
-  const MUSIC_FILE = getAssetUrl("music/rakhi-song.mp3");
+  const { playing, toggle } = useMusicContext();
 
   const handlePointerMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const el = sectionRef.current;
@@ -19,27 +17,6 @@ const RakhiHero: React.FC<{ onAddSister: () => void; onOpenMusic: () => void }>
     const y = e.clientY - rect.top;
     el.style.setProperty("--pointer-x", `${x}px`);
     el.style.setProperty("--pointer-y", `${y}px`);
-  };
-
-  React.useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.loop = true;
-    }
-  }, []);
-
-  const toggleMusic = async () => {
-    if (!audioRef.current) return;
-    if (playing) {
-      audioRef.current.pause();
-      setPlaying(false);
-    } else {
-      try {
-        await audioRef.current.play();
-        setPlaying(true);
-      } catch (error) {
-        console.error("Unable to play audio:", error);
-      }
-    }
   };
 
   return (
@@ -73,7 +50,7 @@ const RakhiHero: React.FC<{ onAddSister: () => void; onOpenMusic: () => void }>
 
           <div className="mt-6 flex items-center justify-center">
             <Button 
-              onClick={toggleMusic} 
+              onClick={toggle} 
               aria-label={playing ? "Pause Rakhi music" : "Play Rakhi music"}
               className="bg-gradient-to-r from-pink-500 to-red-500 hover:from-pink-600 hover:to-red-600 text-white shadow-lg hover:shadow-xl transition-all duration-200 px-6 py-3 rounded-lg font-semibold"
             >
@@ -91,7 +68,6 @@ const RakhiHero: React.FC<{ onAddSister: () => void; onOpenMusic: () => void }>
             </Button>
           </div>
         </div>
-        <audio ref={audioRef} src={MUSIC_FILE} />
       </div>
     </section>
   );

@@ -224,11 +224,7 @@ const SisterCard: React.FC<{ item: Sister; onDelete: (id: string)=>void }>= ({ i
             </div>
           )}
         </div>
-        <div className="mt-3 flex justify-end">
-          <Button variant="outline" size="sm" onClick={()=>onDelete(item.id)}>
-            Remove
-          </Button>
-        </div>
+
       </CardContent>
     </Card>
   );
