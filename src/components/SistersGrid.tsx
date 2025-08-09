@@ -50,17 +50,6 @@ const categoryLabels: Record<SisterCategory, string> = {
   vow: "Chosen Sister",
 };
 
-// Prefill sisters provided by the user (stored as URLs to avoid quota issues)
-const PREFILL_SISTERS: Sister[] = [
-  {
-    id: "prefill-manasvi",
-    name: "Manasvi",
-    category: "vow",
-    photo: "/lovable-uploads/634485de-9112-43f7-96f6-fa124281442d.png",
-    createdAt: Date.now(),
-  },
-];
-
 // Optimize images before storing to keep localStorage small
 async function compressImage(file: File, maxDimension = 1280, quality = 0.7): Promise<string> {
   const url = URL.createObjectURL(file);
@@ -216,17 +205,7 @@ const SistersGrid: React.FC = () => {
   const [items, setItems] = React.useState<Sister[]>(loadSisters());
   const [tab, setTab] = React.useState<string>("all");
 
-React.useEffect(() => {
-  setItems(prev => {
-    const names = new Set(prev.map(i => i.name.toLowerCase()));
-    const toAdd = PREFILL_SISTERS.filter(p => !names.has(p.name.toLowerCase()));
-    return toAdd.length ? [...toAdd, ...prev] : prev;
-  });
-  // only run once on mount to prefill
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-}, []);
-
-React.useEffect(()=>{ saveSisters(items) }, [items]);
+  React.useEffect(()=>{ saveSisters(items) }, [items]);
 
   const addOne = (s: Sister) => setItems([s, ...items]);
   const removeOne = (id: string) => setItems(items.filter(i=>i.id!==id));
