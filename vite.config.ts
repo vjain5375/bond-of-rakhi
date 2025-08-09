@@ -6,7 +6,7 @@ import { componentTagger } from "lovable-tagger";
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
   // Base path for deployment - subtree push serves from root
-  base: './',
+  base: '/bond-of-rakhi/',
   server: {
     host: "::",
     port: 8080,
