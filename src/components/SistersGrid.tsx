@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
 import { ImagePlus, Upload } from "lucide-react";
+import { getLovableUploadUrl } from "@/utils/assets";
 
 export type SisterCategory = "real" | "cousin" | "vow";
 
@@ -50,13 +51,34 @@ const categoryLabels: Record<SisterCategory, string> = {
   vow: "Chosen Sister",
 };
 
-// Prefill sisters provided by the user (stored as URLs to avoid quota issues)
+// User's sisters
 const PREFILL_SISTERS: Sister[] = [
   {
-    id: "prefill-manasvi",
+    id: "sneha-dido",
+    name: "Sneha (Dido)",
+    category: "real",
+    photo: getLovableUploadUrl("sneha.jpeg"),
+    createdAt: Date.now() - 3000,
+  },
+  {
+    id: "shreya-sheru",
+    name: "Shreya Bhangi (Sheru Jabali)",
+    category: "vow",
+    photo: getLovableUploadUrl("shreya bhangi.jpeg"),
+    createdAt: Date.now() - 2000,
+  },
+  {
+    id: "kritika-khushi",
+    name: "Kritika (Khushi) 🐸",
+    category: "cousin",
+    photo: getLovableUploadUrl("khushi and sneha.jpeg"),
+    createdAt: Date.now() - 1000,
+  },
+  {
+    id: "manasvi",
     name: "Manasvi",
     category: "vow",
-    photo: "/lovable-uploads/634485de-9112-43f7-96f6-fa124281442d.png",
+    photo: getLovableUploadUrl("manasvi.jpeg"),
     createdAt: Date.now(),
   },
 ];
