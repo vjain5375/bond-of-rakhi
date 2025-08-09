@@ -47,7 +47,7 @@ function saveSisters(items: Sister[]) {
 const categoryLabels: Record<SisterCategory, string> = {
   real: "Real Sister",
   cousin: "Cousin Sister",
-  vow: "Mouth-spoken Sister",
+  vow: "Chosen Sister",
 };
 
 // Optimize images before storing to keep localStorage small
@@ -220,7 +220,7 @@ const SistersGrid: React.FC = () => {
               <TabsTrigger value="all">All</TabsTrigger>
               <TabsTrigger value="real">Real</TabsTrigger>
               <TabsTrigger value="cousin">Cousin</TabsTrigger>
-              <TabsTrigger value="vow">Mouth-spoken</TabsTrigger>
+              <TabsTrigger value="vow">Chosen Sister</TabsTrigger>
             </TabsList>
           </div>
         <TabsContent value={tab} className="mt-6">
