@@ -43,17 +43,8 @@ const RakhiHero: React.FC<{ onAddSister: () => void; onOpenMusic: () => void }>
           </h1>
           <p className="mt-4 text-base sm:text-lg text-muted-foreground">
             Celebrate the unbreakable bond with a beautiful gallery of your sisters.
-            Upload photographs and set a special song to play in the background.
           </p>
 
-          <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3">
-            <Button variant="hero" size="lg" onClick={onAddSister}>
-              Add Sisters
-            </Button>
-            <Button variant="outline" size="lg" onClick={onOpenMusic}>
-              Play background music
-            </Button>
-          </div>
         </div>
       </div>
     </section>

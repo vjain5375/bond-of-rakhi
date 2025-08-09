@@ -215,19 +215,18 @@ const SistersGrid: React.FC = () => {
   return (
     <section className="mt-10">
       <Tabs value={tab} onValueChange={setTab}>
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-          <TabsList className="w-full sm:w-auto">
-            <TabsTrigger value="all">All</TabsTrigger>
-            <TabsTrigger value="real">Real</TabsTrigger>
-            <TabsTrigger value="cousin">Cousin</TabsTrigger>
-            <TabsTrigger value="vow">Mouth-spoken</TabsTrigger>
-          </TabsList>
-          <AddSisterDialog onAdd={addOne} />
-        </div>
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+            <TabsList className="w-full sm:w-auto">
+              <TabsTrigger value="all">All</TabsTrigger>
+              <TabsTrigger value="real">Real</TabsTrigger>
+              <TabsTrigger value="cousin">Cousin</TabsTrigger>
+              <TabsTrigger value="vow">Mouth-spoken</TabsTrigger>
+            </TabsList>
+          </div>
         <TabsContent value={tab} className="mt-6">
           {filtered.length === 0 ? (
             <div className="text-center text-muted-foreground border rounded-lg p-10">
-              No sisters added yet. Click "Add Sister" to get started.
+              No sisters found.
             </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
