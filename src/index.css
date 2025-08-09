@@ -55,13 +55,14 @@ All colors MUST be HSL.
     --sidebar-ring: 217.2 91.2% 59.8%;
 
     /* Raksha Bandhan theme tokens */
+    --brand-teal: 186 72% 41%;
     --brand-saffron: 33 92% 54%;
     --brand-rose: 338 77% 55%;
     --brand-marigold: 41 97% 56%;
     --brand-deep: 18 38% 18%;
 
-    --gradient-hero: linear-gradient(135deg, hsl(var(--brand-saffron)) 0%, hsl(var(--brand-rose)) 50%, hsl(var(--brand-marigold)) 100%);
-    --gradient-accent: linear-gradient(135deg, hsl(var(--brand-rose)) 0%, hsl(var(--brand-marigold)) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(var(--brand-teal)) 0%, hsl(var(--brand-saffron)) 45%, hsl(var(--brand-rose)) 85%);
+    --gradient-accent: linear-gradient(135deg, hsl(var(--brand-saffron)) 0%, hsl(var(--brand-marigold)) 100%);
 
     --shadow-elegant: 0 12px 30px -12px hsl(var(--brand-rose) / 0.35);
     --shadow-glow: 0 0 40px hsl(var(--brand-marigold) / 0.35);
@@ -107,12 +108,13 @@ All colors MUST be HSL.
      --sidebar-ring: 217.2 91.2% 59.8%;
 
      /* Raksha Bandhan theme tokens (dark) */
+     --brand-teal: 186 72% 44%;
      --brand-saffron: 33 92% 56%;
      --brand-rose: 338 77% 62%;
      --brand-marigold: 41 97% 60%;
      --brand-deep: 18 38% 12%;
 
-     --gradient-hero: linear-gradient(135deg, hsl(var(--brand-rose)) 0%, hsl(var(--brand-marigold)) 50%, hsl(var(--brand-saffron)) 100%);
+     --gradient-hero: linear-gradient(135deg, hsl(var(--brand-teal)) 0%, hsl(var(--brand-marigold)) 55%, hsl(var(--brand-rose)) 100%);
      --gradient-accent: linear-gradient(135deg, hsl(var(--brand-marigold)) 0%, hsl(var(--brand-rose)) 100%);
 
      --shadow-elegant: 0 12px 30px -12px hsl(var(--brand-rose) / 0.4);
